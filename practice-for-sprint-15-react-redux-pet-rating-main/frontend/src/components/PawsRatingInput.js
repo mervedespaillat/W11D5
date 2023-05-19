@@ -1,58 +1,78 @@
 import { useState } from "react";
 
 
-
 const PawsRatingInput = ({ rating, disabled, onChange }) => {
 
   const [activeRating, setActiveRating]  = useState(rating)
 
-    const maxRating = 5;
+  const maxRating = 5;
 
-    const renderPawIcons = () => {
-      // const filled = rating > 0 ? Math.floor(rating) : 0;
-      const emptyPaws = maxRating - activeRating;
+  const handleMouseLeave = () => {
+    if (!disabled) setActiveRating(rating);
+  }
 
-      const pawIcons = [];
+  const handleMouseEnter = (ratingNum) => {
+    if (!disabled) setActiveRating(ratingNum);
+  }
 
-      for (let i =0; i < activeRating; i++) {
-        pawIcons.push(
-          <div className="filled" key={`filled-paw-${i}`} onMouseEnter={()=> handleMouseEnter(i +  1 )} onMouseLeave={handleMouseLeave}>
-            <i  className="fa fa-paw"/>
-          </div>
-        );
-      }
-
-      for (let i =0; i < emptyPaws; i++) {
-        pawIcons.push(
-          <div className="empty" key={`empty-paw-${i}`} onMouseEnter={()=> handleMouseEnter(rating + i +  1 )} onMouseLeave={handleMouseLeave}>
-            <i className="fa fa-paw"/>
-          </div>
-        );
-      }
-      return pawIcons;
+  const classRecognizer = (value) => {
+    if (activeRating >= value) {
+      return 'filled';
+    } else {
+      return 'empty';
     }
-
-    const handleMouseEnter = (rating) => {
-      setActiveRating(rating)
-    }
-
-    const handleMouseLeave = () => {
-      setActiveRating(0)
-    }
-  
+  }
 
   return (
-<>
-<input
-  type="number" 
-  disabled={disabled}
-  value={rating}
-  onChange={onChange}
-/>
+  <>
+    <input
+      type="number" 
+      disabled={disabled}
+      value={rating}
+      onChange={onChange}
+    />
     <div className="rating-input">
-      {renderPawIcons()}
+      <div className={classRecognizer(1)} 
+           onMouseEnter={()=> handleMouseEnter(1)} 
+           onMouseLeave={handleMouseLeave}
+           onClick={() => onChange(1)}
+           >
+          <i className="fa fa-paw"/>
+      </div>
+
+      <div className={classRecognizer(2)} 
+           onMouseEnter={()=> handleMouseEnter(2)} 
+           onMouseLeave={handleMouseLeave}
+           onClick={() => onChange(2)}
+           >
+          <i className="fa fa-paw"/>
+      </div>
+
+      <div className={classRecognizer(3)}
+           onMouseEnter={()=> handleMouseEnter(3)}
+           onMouseLeave={handleMouseLeave}
+           onClick={() => onChange(3)}
+           >
+          <i className="fa fa-paw"/>
+      </div>
+
+      <div className={classRecognizer(4)}
+           onMouseEnter={()=> handleMouseEnter(4)}
+           onMouseLeave={handleMouseLeave}
+           onClick={() => onChange(4)}
+           >
+          <i className="fa fa-paw"/>
+      </div>
+
+      <div className={classRecognizer(5)}
+           onMouseEnter={()=> handleMouseEnter(5)}
+           onMouseLeave={handleMouseLeave}
+           onClick={() => onChange(5)}
+           >
+          <i className="fa fa-paw"/>
+      </div>
     </div>
-</>
+  </>
   );
 };
 
